@@ -1,7 +1,7 @@
 import socket
-
+#creación del socket del lado del cliente
 cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+#cliente se conecta al servidor indicado, en puerto 5000
 cliente.connect(('127.0.0.1', 5000))
 
 mensaje = ""

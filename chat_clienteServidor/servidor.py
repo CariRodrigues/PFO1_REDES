@@ -45,12 +45,13 @@ def guardar_mensaje(contenido, fecha_envio, ip_cliente):
             if conexion_db is not None:
                 conexion_db.close()
 
-
-def inicializar_servidor():
 #configuración del socket (TCP/IP)
+def inicializar_servidor():
+    #creación del socket que espera conexiones con algún cliente
     servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #espera la conexión de un cliente
     try:
-        servidor.bind(('127.0.0.1' , 5000))
+        servidor.bind(('127.0.0.1' , 5000)) 
     except OSError:
         print("No se pudo iniciar el servidor porque el puerto está ocupado")
         return None
@@ -61,11 +62,13 @@ def inicializar_servidor():
 
 #acepta la conexión con el cliente, recibe mensajes y responde
 def aceptar_conexion(servidor):
-    conexion, direccion = servidor.accept()
+    #conexion (socket de comunicación con el cliente)
+    conexion, direccion = servidor.accept() 
     print("cliente conectado", direccion)
 
     while True: 
-            datos = conexion.recv(1024)
+            #recibe los datos
+            datos = conexion.recv(1024) 
             if datos == b'':
                 break
     
@@ -76,9 +79,9 @@ def aceptar_conexion(servidor):
             print(f"Mensaje recibido:{datos}, {fecha_hora}")
     
             respuesta = f"Mensaje recibido: {fecha_hora}"    
-            conexion.sendall(respuesta.encode('utf-8'))
+            conexion.sendall(respuesta.encode('utf-8')) #envía respuesta
 
-    conexion.close()
+    conexion.close() #cerramos el socket con ese cliente
 
 
 def main():
